@@ -36,11 +36,12 @@ app.get('/', function(request, response) {
 	var queryData = url.parse(request.url, true).query;
 	console.log(queryData);
 
-	console.log(queryData.test);
+	console.log(queryData.first_name);
 
 	if(queryData.first_name &&
 		queryData.regid &&
 		queryData.first_name in registeredUsers) {
+		registeredUsers[queryData.first_name] = queryData.regid;
 		console.log(registeredUsers[queryData.first_name]);
 	}
 });
