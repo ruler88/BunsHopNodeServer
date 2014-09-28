@@ -1,7 +1,7 @@
 {
-  "name": "node-js-getting-started",
-  "version": "0.1.2",
-  "description": "A sample Node.js app using Express 4",
+  "name": "buns-hop-server",
+  "version": "0.1.0",
+  "description": "communication between devices for BunsHop",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
