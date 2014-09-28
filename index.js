@@ -36,5 +36,10 @@ app.get('/', function(request, response) {
 	var queryData = url.parse(request.url, true).query;
 	console.log(queryData);
 
+	console.log(queryData.first_name);
+	console.log(queryData.test);
+	if("Kai" in registeredUsers) {
+
+	}
 
 });
