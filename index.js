@@ -36,10 +36,15 @@ app.get('/', function(request, response) {
 	var queryData = url.parse(request.url, true).query;
 	console.log(queryData);
 
-	console.log(queryData.first_name);
 	console.log(queryData.test);
-	if("Kai" in registeredUsers) {
 
+	if(queryData.first_name &&
+		queryData.regid &&
+		queryData.first_name in registeredUsers) {
+		console.log(registeredUsers[queryData.first_name]);
 	}
+});
 
+app.listen(app.get('port'), function() {
+  console.log("Node app is running at localhost:" + app.get('port'))
 });
