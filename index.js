@@ -40,18 +40,18 @@ app.get('/', function(request, response) {
 	if(queryData.first_name) sendPush(queryData.first_name);
 
 
-	if(queryData.first_name &&
-		queryData.first_name in registeredUsers) {
-		//for new regid
-		if(queryData.regid) {
-			registeredUsers[queryData.first_name] = queryData.regid;
-			console.log(registeredUsers[queryData.first_name]);
-		}
-		//for location updates
-		if(queryData.location) {
-			//todo: update user location
-		}
-	}
+//	if(queryData.first_name &&
+//		queryData.first_name in registeredUsers) {
+//		//for new regid
+//		if(queryData.regid) {
+//			registeredUsers[queryData.first_name] = queryData.regid;
+//			console.log(registeredUsers[queryData.first_name]);
+//		}
+//		//for location updates
+//		if(queryData.location) {
+//			//todo: update user location
+//		}
+//	}
 });
 
 app.listen(app.get('port'), function() {
