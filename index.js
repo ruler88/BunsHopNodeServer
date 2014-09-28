@@ -1,8 +1,7 @@
 var express = require('express');
 var url = require('url');
-var GCM = require('gcm').GCM;
-var apiKey = 'AIzaSyBSbZfBTrAH4xXdnk_1iVLRclNTWiUcWmY';
-var gcm = new GCM(apiKey);
+var gcm = require('gcm');
+var sender = new gcm.Sender('AIzaSyBSbZfBTrAH4xXdnk_1iVLRclNTWiUcWmY');
 
 var registeredUsers = {
 	Kai: '',
@@ -14,18 +13,20 @@ app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
 
-var sendPush = function() {
-	var message = {
-		registration_id: 'APA91bGnxRsa5Fhq2-WuLu4I1Hk71liH28ceVOHA_zvCEcXXaJbBLw55A4_nwZ5HFNNmpJ6Krx-F4X3IjXLC8VVzJhypGAwEFqD2GtwxeNKbBElLd_AnhTcYs1ZQLDexg2Xfvn3TeT6Jkl1iqJb0f2YYu7t0IwzTzZId13jmnp5jJGnC0jsVT_w',
-		message: "this is a nice message",
-		title: 'title4life'
-	};
-	gcm.send(message, function(err, messageId){
-		if (err) {
-			console.log("Something has gone wrong!");
-		} else {
-			console.log("Sent with message ID: ", messageId);
+var sendPush = function(first_name) {
+	var recipients = [];
+	var message = new gcm.Message();
+	message.addDataWithKeyValue('origin', first_name);
+	message.addDataWithKeyValue('key2','message2');
+
+	for(var username in registeredUsers) {
+		if(registeredUsers[username].length != 0) {
+			recipients.push(registeredUsers[username]);
 		}
+	}
+
+	sender.send(message, recipients, 4, function(err, result) {
+		console.log(result);
 	});
 };
 
@@ -35,14 +36,21 @@ app.get('/', function(request, response) {
   response.send('Hello World!');
 	var queryData = url.parse(request.url, true).query;
 	console.log(queryData);
+	//todo kill test
+	if(queryData.first_name) sendPush(queryData.first_name);
 
-	console.log(queryData.first_name);
 
 	if(queryData.first_name &&
-		queryData.regid &&
 		queryData.first_name in registeredUsers) {
-		registeredUsers[queryData.first_name] = queryData.regid;
-		console.log(registeredUsers[queryData.first_name]);
+		//for new regid
+		if(queryData.regid) {
+			registeredUsers[queryData.first_name] = queryData.regid;
+			console.log(registeredUsers[queryData.first_name]);
+		}
+		//for location updates
+		if(queryData.location) {
+			//todo: update user location
+		}
 	}
 });
 
