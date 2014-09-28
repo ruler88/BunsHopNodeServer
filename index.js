@@ -26,7 +26,7 @@ var sendPush = function(first_name) {
 	}
 
 	sender.send(message, recipients, 4, function(err, result) {
-		console.log(result);
+		console.log("result from send: \n" + result);
 	});
 };
 
