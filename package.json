@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "express": "~4.9.x",
-    "gcm": "latest"
+    "node-gcm": "~0.9.12"
   },
   "engines": {
     "node": "0.10.x"

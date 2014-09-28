@@ -1,6 +1,6 @@
 var express = require('express');
 var url = require('url');
-var gcm = require('gcm');
+var gcm = require('node-gcm');
 var sender = new gcm.Sender('AIzaSyBSbZfBTrAH4xXdnk_1iVLRclNTWiUcWmY');
 
 var registeredUsers = {
