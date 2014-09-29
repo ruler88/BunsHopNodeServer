@@ -13,14 +13,14 @@ app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
 
-var sendPush = function(first_name) {
+var sendPush = function(first_name, location) {
 	var recipients = [];
 	var message = new gcm.Message();
 	message.addDataWithKeyValue('origin', first_name);
-	message.addDataWithKeyValue('key2','message2');
+	message.addDataWithKeyValue('location', location);
 
 	for(var username in registeredUsers) {
-		if(registeredUsers[username].length != 0) {
+		if(registeredUsers[username].length != 0 && registeredUsers != username) {
 			recipients.push(registeredUsers[username]);
 		}
 	}
@@ -37,23 +37,19 @@ app.get('/', function(request, response) {
   response.send('Hello World!');
 	var queryData = url.parse(request.url, true).query;
 	console.log(queryData);
-	//todo kill test
 
-
-
-//	if(queryData.first_name &&
-//		queryData.first_name in registeredUsers) {
-//		//for new regid
-//		if(queryData.regid) {
-//			registeredUsers[queryData.first_name] = queryData.regid;
-//			console.log(registeredUsers[queryData.first_name]);
-//		}
-//		//for location updates
-//		if(queryData.location) {
-//			sendPush(queryData.first_name);
-//			//todo: update user location
-//		}
-//	}
+	if(queryData.first_name &&
+		queryData.first_name in registeredUsers) {
+		//for new regid
+		if(queryData.regid) {
+			registeredUsers[queryData.first_name] = queryData.regid;
+			console.log(registeredUsers[queryData.first_name]);
+		}
+		//for location updates
+		if(queryData.location) {
+			sendPush(queryData.first_name, queryData.location);
+		}
+	}
 });
 
 app.listen(app.get('port'), function() {
