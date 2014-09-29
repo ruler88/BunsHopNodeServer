@@ -16,7 +16,7 @@ app.use(express.static(__dirname + '/public'));
 var sendPush = function(first_name, location) {
 	var recipients = [];
 	var message = new gcm.Message();
-	message.addDataWithKeyValue('origin', first_name);
+	message.addDataWithKeyValue('first_name', first_name);
 	message.addDataWithKeyValue('location', location);
 
 	for(var username in registeredUsers) {
