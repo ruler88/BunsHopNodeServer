@@ -26,8 +26,8 @@ var sendPush = function(first_name) {
 	}
 
 	sender.send(message, recipients, 4, function(err, result) {
-		console.log("recips: " + recipients);
 		console.log("result from send: \n" + JSON.stringify(result));
+		if(err) {console.error(JSON.stringify(err));}
 	});
 };
 
@@ -38,7 +38,7 @@ app.get('/', function(request, response) {
 	var queryData = url.parse(request.url, true).query;
 	console.log(queryData);
 	//todo kill test
-	if(queryData.first_name) sendPush(queryData.first_name);
+
 
 
 //	if(queryData.first_name &&
@@ -50,6 +50,7 @@ app.get('/', function(request, response) {
 //		}
 //		//for location updates
 //		if(queryData.location) {
+//			sendPush(queryData.first_name);
 //			//todo: update user location
 //		}
 //	}
