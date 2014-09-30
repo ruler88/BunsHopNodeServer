@@ -13,12 +13,12 @@ app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
 
-var sendPush = function(first_name, location) {
+var sendLocation = function(first_name, latitude, longitude) {
 	var recipients = [];
 	var message = new gcm.Message();
 	message.addDataWithKeyValue('first_name', first_name);
-	message.addDataWithKeyValue('location', location);
-
+	message.addDataWithKeyValue('latitude', latitude);
+	message.addDataWithKeyValue('longitude', longitude);
 	for(var username in registeredUsers) {
 		if(registeredUsers[username].length != 0 && registeredUsers != username) {
 			recipients.push(registeredUsers[username]);
@@ -29,6 +29,16 @@ var sendPush = function(first_name, location) {
 		console.log("result from send: \n" + JSON.stringify(result));
 		if(err) {console.error(JSON.stringify(err));}
 	});
+};
+
+var getLocation = function() {
+	var recipients = [];
+	var message = new gcm.Message();
+	for(var username in registeredUsers) {
+		if(registeredUsers[username].length != 0 && registeredUsers != username) {
+			recipients.push(registeredUsers[username]);
+		}
+	}
 };
 
 
@@ -46,8 +56,8 @@ app.get('/', function(request, response) {
 			console.log(registeredUsers[queryData.first_name]);
 		}
 		//for location updates
-		if(queryData.location) {
-			sendPush(queryData.first_name, queryData.location);
+		if(queryData.latitude && queryData.longitude) {
+			sendLocation(queryData.first_name, queryData.latitude, queryData.longitude);
 		}
 	}
 });
