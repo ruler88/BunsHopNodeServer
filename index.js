@@ -20,7 +20,7 @@ var sendLocation = function(first_name, latitude, longitude) {
 	message.addDataWithKeyValue('latitude', latitude);
 	message.addDataWithKeyValue('longitude', longitude);
 	for(var username in registeredUsers) {
-		if(registeredUsers[username].length != 0 && registeredUsers != username) {
+		if(registeredUsers[username].length != 0 && first_name != username) {
 			recipients.push(registeredUsers[username]);
 		}
 	}
@@ -31,14 +31,20 @@ var sendLocation = function(first_name, latitude, longitude) {
 	});
 };
 
-var getLocation = function() {
+var getLocation = function(first_name) {
 	var recipients = [];
 	var message = new gcm.Message();
+	message.addDataWithKeyValue('getLocation', 'getLocation');
 	for(var username in registeredUsers) {
-		if(registeredUsers[username].length != 0 && registeredUsers != username) {
+		if(registeredUsers[username].length != 0 && first_name != username) {
 			recipients.push(registeredUsers[username]);
 		}
 	}
+
+	sender.send(message, recipients, 4, function(err, result) {
+		console.log("result from send: \n" + JSON.stringify(result));
+		if(err) {console.error(JSON.stringify(err));}
+	});
 };
 
 
@@ -58,6 +64,10 @@ app.get('/', function(request, response) {
 		//for location updates
 		if(queryData.latitude && queryData.longitude) {
 			sendLocation(queryData.first_name, queryData.latitude, queryData.longitude);
+		}
+
+		if(queryData.requestLocation) {
+			getLocation(queryData.first_name);
 		}
 	}
 });
