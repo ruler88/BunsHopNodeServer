@@ -19,7 +19,7 @@ var sendLocation = function(first_name, latitude, longitude, metaData) {
 	message.addDataWithKeyValue('first_name', first_name);
 	message.addDataWithKeyValue('latitude', latitude);
 	message.addDataWithKeyValue('longitude', longitude);
-	message.addDataWithKeyValue('metaData', metaData);
+	if(metaData) 	message.addDataWithKeyValue('metaData', metaData);
 	for(var username in registeredUsers) {
 		if(registeredUsers[username].length != 0 && first_name != username) {
 			recipients.push(registeredUsers[username]);
