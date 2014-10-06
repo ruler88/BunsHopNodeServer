@@ -64,7 +64,8 @@ app.get('/', function(request, response) {
 		}
 		return value;
 	});
-	console.log(url.parse(request.url, true) + "\nDONE\n");
+	console.log(JSON.stringify(url.parse(request.url, true))
+			+ "\nDONE\n");
 	cache = null; // Enable garbage collection
 
 
