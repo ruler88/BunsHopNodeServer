@@ -52,6 +52,7 @@ var getLocation = function(first_name) {
 
 app.get('/', function(request, response) {
   response.send('Hello World!');
+	console.log(reuqest);
 	var queryData = url.parse(request.url, true).query;
 	console.log(queryData);
 
