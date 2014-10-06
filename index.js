@@ -78,7 +78,7 @@ app.get('/', function(request, response) {
 
 app.post('/', function(request, response) {
 	response.send('Hello World!');
-	console.log("post req: " + request.param('first_name'));
+	console.log("post req: " + url.parse(request.url, true).query);
 });
 
 app.listen(app.get('port'), function() {
