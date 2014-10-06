@@ -1,6 +1,8 @@
 var express = require('express');
 var url = require('url');
 var gcm = require('node-gcm');
+var urlencode = require('urlencode');
+var json_middleware = require('json-middleware');
 var sender = new gcm.Sender('AIzaSyBSbZfBTrAH4xXdnk_1iVLRclNTWiUcWmY');
 
 var registeredUsers = {
@@ -11,8 +13,8 @@ var registeredUsers = {
 var app = express();
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
-app.use(express.urlencoded());
-app.use(express.json());
+app.use(urlencode);
+app.use(json_middleware);
 
 
 
