@@ -27,7 +27,7 @@ var sendLocation = function(first_name, latitude, longitude, metaData) {
 	}
 
 	sender.send(message, recipients, 4, function(err, result) {
-		console.log("result from send: \n" + JSON.stringify(result));
+		console.log("SEND COMPLETE");
 		if(err) {console.error(JSON.stringify(err));}
 	});
 };
