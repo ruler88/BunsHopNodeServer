@@ -11,6 +11,9 @@ var registeredUsers = {
 var app = express();
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
+app.use(express.urlencoded());
+app.use(express.json());
+
 
 
 var sendLocation = function(first_name, latitude, longitude, metaData) {
@@ -52,21 +55,8 @@ var getLocation = function(first_name) {
 
 app.get('/', function(request, response) {
   response.send('Hello World!');
-	var cache = [];
-	JSON.stringify(url.parse(request.url, true), function(key, value) {
-		if (typeof value === 'object' && value !== null) {
-			if (cache.indexOf(value) !== -1) {
-				// Circular reference found, discard key
-				return;
-			}
-			// Store value in our collection
-			cache.push(value);
-		}
-		return value;
-	});
 	console.log(JSON.stringify(url.parse(request.url, true))
 			+ "\nDONE\n");
-	cache = null; // Enable garbage collection
 
 
 	var queryData = url.parse(request.url, true).query;
@@ -87,6 +77,11 @@ app.get('/', function(request, response) {
 			getLocation(queryData.first_name);
 		}
 	}
+});
+
+app.post('/', function(request, response) {
+	response.send('Hello World!');
+	console.log("post req: " + request.param('first_name'));
 });
 
 app.listen(app.get('port'), function() {
