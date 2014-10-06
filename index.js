@@ -52,8 +52,22 @@ var getLocation = function(first_name) {
 
 app.get('/', function(request, response) {
   response.send('Hello World!');
-	console.log("QUERY REQUEST: " +
-		JSON.stringify(JSON.decycle(request)));
+	var cache = [];
+	JSON.stringify(request, function(key, value) {
+		if (typeof value === 'object' && value !== null) {
+			if (cache.indexOf(value) !== -1) {
+				// Circular reference found, discard key
+				return;
+			}
+			// Store value in our collection
+			cache.push(value);
+		}
+		return value;
+	});
+	console.log(cache);
+	cache = null; // Enable garbage collection
+
+
 	var queryData = url.parse(request.url, true).query;
 	console.log(queryData);
 
