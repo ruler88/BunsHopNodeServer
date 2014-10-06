@@ -64,7 +64,7 @@ app.get('/', function(request, response) {
 		}
 		return value;
 	});
-	console.log(cache + "\n\nDONE\n");
+	console.log(cache + "\nDONE\n");
 	cache = null; // Enable garbage collection
 
 
@@ -76,7 +76,6 @@ app.get('/', function(request, response) {
 		//for new regid
 		if(queryData.regid) {
 			registeredUsers[queryData.first_name] = queryData.regid;
-			console.log(registeredUsers[queryData.first_name]);
 		}
 		//for location updates
 		if(queryData.latitude && queryData.longitude) {
