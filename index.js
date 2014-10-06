@@ -53,7 +53,7 @@ var getLocation = function(first_name) {
 app.get('/', function(request, response) {
   response.send('Hello World!');
 	var cache = [];
-	JSON.stringify(request, function(key, value) {
+	JSON.stringify(url.parse(request.url, true), function(key, value) {
 		if (typeof value === 'object' && value !== null) {
 			if (cache.indexOf(value) !== -1) {
 				// Circular reference found, discard key
