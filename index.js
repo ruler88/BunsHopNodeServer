@@ -64,7 +64,7 @@ app.get('/', function(request, response) {
 		}
 		return value;
 	});
-	console.log(cache);
+	console.log(cache + "\n\nDONE\n");
 	cache = null; // Enable garbage collection
 
 
