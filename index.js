@@ -72,7 +72,7 @@ var getLocation = function(first_name) {
 			message.addDataWithKeyValue('latitude', location.latitude);
 			message.addDataWithKeyValue('longitude', location.longitude);
 			sender.send(message, recipients, 4, function(err, result) {});
-			console.log("sending loc");
+			console.log("Sending loc to: " first_name);
 		}
 	}
 
