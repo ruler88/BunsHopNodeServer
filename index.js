@@ -32,6 +32,20 @@ var sendLocation = function(first_name, latitude, longitude, metaData) {
 	});
 };
 
+var backgroundGeolocationCallback = function(first_name) {
+	var recipients = [];
+	var message = new gcm.Message();
+	message.addDataWithKeyValue('first_name', first_name);
+	message.addDataWithKeyValue('backgroundAjaxGelocation', 'backgroundAjaxGelocation');
+
+
+	recipients.push(registeredUsers[first_name]);
+
+	sender.send(message, recipients, 4, function(err, result) {
+		console.log('Background geolocation ajax called');
+	});
+};
+
 var getLocation = function(first_name) {
 	var recipients = [];
 	var message = new gcm.Message();
@@ -76,6 +90,8 @@ app.get('/', function(request, response) {
 app.post('/', function(request, response) {
 	response.send('Hello World!');
 	console.log("post req: " + url.parse(request.url, true).query);
+
+	backgroundGeolocationCallback('Kai');
 });
 
 app.listen(app.get('port'), function() {
