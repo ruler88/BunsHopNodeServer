@@ -97,7 +97,8 @@ app.post('/', function(request, response) {
 	response.send('Hello World!');
 	var queryData = request.body;
 	console.log("Post Requestion: \n" + util.inspect(queryData, {colors: true, depth:4}));
-	console.log("YOLO MOTHERFUCKER: " + queryData.location.latitude + ", " + queryData.location.longitude);
+	console.log("YOLO MOTHERFUCKER: " + queryData.first_name + " - " +
+			queryData.location.latitude + ", " + queryData.location.longitude);
 
 	cachedLocation[queryData.first_name] = queryData.location;
 	backgroundGeolocationCallback(queryData.first_name, queryData.location);
