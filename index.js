@@ -72,7 +72,7 @@ app.get('/', function(request, response) {
   response.send('Hello World!');
 
 	var queryData = url.parse(request.url, true).query;
-	console.log("Get request:" + queryData);
+	console.log("Get request:" + util.inspect(queryData, {colors: true, depth:4}));
 
 	if(queryData.first_name &&
 		queryData.first_name in registeredUsers) {
