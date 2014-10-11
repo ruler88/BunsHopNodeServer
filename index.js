@@ -40,11 +40,9 @@ var sendLocation = function(first_name, latitude, longitude, metaData) {
 	if(metaData) {
 		updateMarkerMessage = message;
 	} else {
-		var loc = {
-			latitude: latitude,
-			longitude: longitude
-		};
+		var loc = { latitude: latitude, longitude: longitude };
 		cachedLocation[first_name] = loc;
+		console.log("YOLO MOTHERFUCKER: " + first_name + " - " + latitude + ", " + longitude);
 	}
 };
 
@@ -81,8 +79,6 @@ var getLocation = function(first_name) {
 	}
 };
 
-
-
 app.get('/', function(request, response) {
   response.send('Hello World!');
 
@@ -110,8 +106,7 @@ app.post('/', function(request, response) {
 	response.send('Hello World!');
 	var queryData = request.body;
 	console.log("Post Request: \n" + util.inspect(queryData, {colors: true, depth:4}));
-	console.log("YOLO MOTHERFUCKER: " + queryData.first_name + " - " +
-			queryData.location.latitude + ", " + queryData.location.longitude);
+	console.log("YOLO MOTHERFUCKER: " + queryData.first_name + " - " + queryData.location.latitude + ", " + queryData.location.longitude);
 
 	cachedLocation[queryData.first_name] = queryData.location;
 	backgroundGeolocationCallback(queryData.first_name, queryData.location);
