@@ -34,10 +34,7 @@ var sendLocation = function(first_name, latitude, longitude, metaData) {
 		}
 	}
 
-	sender.send(message, recipients, 4, function(err, result) {
-		console.log("SEND COMPLETE");
-		if(err) {console.error(JSON.stringify(err));}
-	});
+	sender.send(message, recipients, 4, function(err, result) {});
 };
 
 var backgroundGeolocationCallback = function(first_name, location) {
@@ -64,6 +61,7 @@ var getLocation = function(first_name) {
 			message.addDataWithKeyValue('latitude', location.latitude);
 			message.addDataWithKeyValue('longitude', location.longitude);
 			sender.send(message, recipients, 4, function(err, result) {});
+			console.log("sending loc");
 		}
 	}
 };
@@ -74,7 +72,7 @@ app.get('/', function(request, response) {
   response.send('Hello World!');
 
 	var queryData = url.parse(request.url, true).query;
-	console.log(queryData);
+	console.log("Get request:" + queryData);
 
 	if(queryData.first_name &&
 		queryData.first_name in registeredUsers) {
@@ -96,7 +94,7 @@ app.get('/', function(request, response) {
 app.post('/', function(request, response) {
 	response.send('Hello World!');
 	var queryData = request.body;
-	console.log("Post Requestion: \n" + util.inspect(queryData, {colors: true, depth:4}));
+	console.log("Post Request: \n" + util.inspect(queryData, {colors: true, depth:4}));
 	console.log("YOLO MOTHERFUCKER: " + queryData.first_name + " - " +
 			queryData.location.latitude + ", " + queryData.location.longitude);
 
