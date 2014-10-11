@@ -61,6 +61,8 @@ var backgroundGeolocationCallback = function(first_name, location) {
 var getLocation = function(first_name) {
 	var recipients = [];
 	recipients.push(registeredUsers[first_name]);
+	console.info('in getLocation');
+	console.info(JSON.stringify(cachedLocation));
 
 	for(var username in cachedLocation) {
 		var location = cachedLocation[username];
