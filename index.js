@@ -98,7 +98,7 @@ app.post('/', function(request, response) {
 	var queryData = request.body;
 	console.log("Post Requestion: \n" + util.inspect(queryData, {colors: true, depth:4}));
 
-	cachedLocation[first_name] = queryData.location;
+	cachedLocation[queryData.first_name] = queryData.location;
 	backgroundGeolocationCallback(queryData.first_name, queryData.location);
 	sendLocation(queryData.first_name, queryData.location.latitude, queryData.location.longitude);
 });
