@@ -94,7 +94,7 @@ app.get('/', function(request, response) {
 app.post('/', function(request, response) {
 	response.send('Hello World!');
 	console.log("post req: " + url.parse(request.url, true).query);
-	var queryData = req.body;
+	var queryData = request.body;
 	console.log(JSON.stringify(queryData));
 	console.log(util.inspect(queryData, {colors: true, depth:4}));
 
