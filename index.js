@@ -90,6 +90,8 @@ app.get('/', function(request, response) {
 app.post('/', function(request, response) {
 	response.send('Hello World!');
 	console.log("post req: " + url.parse(request.url, true).query);
+	var queryData = url.parse(request.url, true).query;
+	console.log(JSON.stringify(queryData));
 
 	backgroundGeolocationCallback('Kai');
 });
