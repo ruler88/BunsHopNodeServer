@@ -1,6 +1,7 @@
 var express = require('express');
 var url = require('url');
 var gcm = require('node-gcm');
+var util = require('util');
 var sender = new gcm.Sender('AIzaSyBSbZfBTrAH4xXdnk_1iVLRclNTWiUcWmY');
 
 var registeredUsers = {
@@ -92,7 +93,7 @@ app.post('/', function(request, response) {
 	console.log("post req: " + url.parse(request.url, true).query);
 	var queryData = url.parse(request.url, true).query;
 	console.log(JSON.stringify(queryData));
-	console.log(JSON.stringify(request));
+	console.log(util.inspect(request, {colors: true}));
 
 	backgroundGeolocationCallback('Kai');
 });
