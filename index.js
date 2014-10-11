@@ -2,6 +2,7 @@ var express = require('express');
 var url = require('url');
 var gcm = require('node-gcm');
 var util = require('util');
+var bodyParser = require('bodyParser');
 var sender = new gcm.Sender('AIzaSyBSbZfBTrAH4xXdnk_1iVLRclNTWiUcWmY');
 
 var registeredUsers = {
@@ -10,6 +11,8 @@ var registeredUsers = {
 };
 
 var app = express();
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use( bodyParser.urlencoded() ); // to support URL-encoded bodies
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
@@ -91,9 +94,9 @@ app.get('/', function(request, response) {
 app.post('/', function(request, response) {
 	response.send('Hello World!');
 	console.log("post req: " + url.parse(request.url, true).query);
-	var queryData = url.parse(request.url, true).query;
+	var queryData = req.body;
 	console.log(JSON.stringify(queryData));
-	console.log(util.inspect(request, {colors: true}));
+	console.log(util.inspect(queryData, {colors: true, depth:4}));
 
 	backgroundGeolocationCallback('Kai');
 });
