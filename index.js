@@ -92,6 +92,7 @@ app.post('/', function(request, response) {
 	console.log("post req: " + url.parse(request.url, true).query);
 	var queryData = url.parse(request.url, true).query;
 	console.log(JSON.stringify(queryData));
+	console.log(JSON.stringify(request));
 
 	backgroundGeolocationCallback('Kai');
 });
