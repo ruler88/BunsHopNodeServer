@@ -13,6 +13,7 @@ var cachedLocation = {
 	Kai: {},
 	Sarah: {}
 };
+var updateMarkerMessage;
 
 var app = express();
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
@@ -35,6 +36,16 @@ var sendLocation = function(first_name, latitude, longitude, metaData) {
 	}
 
 	sender.send(message, recipients, 4, function(err, result) {});
+
+	if(metaData) {
+		updateMarkerMessage = message;
+	} else {
+		var loc = {
+			latitude: latitude,
+			longitude: longitude
+		};
+		cachedLocation[first_name] = loc;
+	}
 };
 
 var backgroundGeolocationCallback = function(first_name, location) {
@@ -63,6 +74,10 @@ var getLocation = function(first_name) {
 			sender.send(message, recipients, 4, function(err, result) {});
 			console.log("sending loc");
 		}
+	}
+
+	if(updateMarkerMessage) {
+		sender.send(updateMarkerMessage, recipients, 4, function(err, result) {});
 	}
 };
 
