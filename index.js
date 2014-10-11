@@ -54,9 +54,9 @@ var getLocation = function(first_name) {
 	recipients.push(registeredUsers[first_name]);
 
 	for(var username in cachedLocation) {
-		if(first_name != username) {
+		var location = cachedLocation[username];
+		if(first_name != username && location.latitude && location.longitude) {
 			var message = new gcm.Message();
-			var location = cachedLocation[username];
 			message.addDataWithKeyValue('first_name', username);
 			message.addDataWithKeyValue('latitude', location.latitude);
 			message.addDataWithKeyValue('longitude', location.longitude);
