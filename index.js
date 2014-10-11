@@ -2,7 +2,7 @@ var express = require('express');
 var url = require('url');
 var gcm = require('node-gcm');
 var util = require('util');
-var bodyParser = require('bodyParser');
+var bodyParser = require('body-parser');
 var sender = new gcm.Sender('AIzaSyBSbZfBTrAH4xXdnk_1iVLRclNTWiUcWmY');
 
 var registeredUsers = {
