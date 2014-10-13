@@ -96,6 +96,11 @@ var storeRegId = function(first_name, regid) {
 	});
 };
 
+var removeMarker = function() {
+	updateMarkerMessage = null;
+	pgClient.query('DELETE FROM registeredUsers WHERE metadata IS NOT NULL', function(err, result) {});
+};
+
 app.get('/', function(request, response) {
   response.send('Hello World!');
 
@@ -115,6 +120,10 @@ app.get('/', function(request, response) {
 
 		if(queryData.requestLocation) {
 			getLocation(queryData.first_name);
+		}
+
+		if(queryData.removeMarker) {
+			removeMarker();
 		}
 	}
 });
