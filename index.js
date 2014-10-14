@@ -143,7 +143,7 @@ app.get('/db', function (request, response) {
 	var queryData = url.parse(request.url, true).query;
 	console.log(util.inspect(queryData, {colors: true, depth:4}));
 
-	pgClient.query('SELECT * FROM ' + queryData.db, function(err, result) {
+	pgClient.query('SELECT * FROM ' + queryData.db + ' ORDER BY time DESC', function(err, result) {
 		if (err) { console.error(err); response.send("Error " + err); }
 		else { response.send(result.rows); } });
 });
@@ -192,12 +192,12 @@ app.get('/readCache', function (request, response) {
 });
 
 var truncateDb = function() {
-	pgClient.query('DELETE FROM cachedLocation WHERE (first_name !=  \'Kai\' AND first_name != \'Sarah\'', function(err, result) {
-		console.log(err);
+	pgClient.query('DELETE FROM cachedLocation WHERE (first_name !=  \'Kai\' AND first_name != \'Sarah\')', function(err, result) {
+		console.log("error un: " + err);
 		console.log("Remove unauthorized: \n" + util.inspect(result, {colors: true, depth:4}));
 	});
-	pgClient.query('DELETE FROM cachedLocation WHERE ($1-time)/86400000 > 1', [new Date()], function(err, result) {
-		console.log(err);
+	pgClient.query('DELETE FROM cachedLocation WHERE ($1-time) > \'1 day\'::interval', [new Date()], function(err, result) {
+		console.log("error old: " + err);
 		console.log("Remove old: \n" + util.inspect(result, {colors: true, depth:4}));
 	});
 };
