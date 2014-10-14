@@ -181,8 +181,8 @@ app.get('/createTable', function (request, response) {
 //	});
 });
 
-app.get('/test', function (request, response) {
-	readDbCache();
+app.get('/truncateDb', function (request, response) {
+	truncateDb();
 });
 app.get('/readCache', function (request, response) {
 	var s = "cachedLocation: \n" + JSON.stringify(cachedLocation) +
@@ -190,6 +190,17 @@ app.get('/readCache', function (request, response) {
 		"\n\nupdateMarkerMessage\n: \'" + JSON.stringify(updateMarkerMessage);
 	response.send(s);
 });
+
+var truncateDb = function() {
+	pgClient.query('DELETE FROM cachedLocation WHERE (first_name !=  \'Kai\' AND first_name != \'Sarah\'', function(err, result) {
+		console.log(err);
+		console.log("Remove unauthorized: \n" + util.inspect(result, {colors: true, depth:4}));
+	});
+	pgClient.query('DELETE FROM cachedLocation WHERE ($1-time)/86400000 > 1', [new Date()], function(err, result) {
+		console.log(err);
+		console.log("Remove old: \n" + util.inspect(result, {colors: true, depth:4}));
+	});
+};
 
 var readDbCache = function() {
 	//cached locations
