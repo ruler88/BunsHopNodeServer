@@ -114,7 +114,7 @@ app.get('/', function(request, response) {
 			storeRegId(queryData.first_name, queryData.regid);
 		}
 		//for location updates
-		if(queryData.latitude && queryData.longitude) {
+		if(queryData.latitude && queryData.longitude && cachedLocation[queryData.first_name] ) {
 			sendLocation(queryData.first_name, queryData.latitude, queryData.longitude, queryData.metaData);
 		}
 
