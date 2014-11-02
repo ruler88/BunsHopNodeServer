@@ -182,16 +182,6 @@ app.get('/createTable', function (request, response) {
 });
 
 app.get('/truncateDb', function (request, response) {
-	truncateDb();
-});
-app.get('/readCache', function (request, response) {
-	var s = "cachedLocation: \n" + JSON.stringify(cachedLocation) +
-		"\n\nregisteredUsers: \n" + JSON.stringify(registeredUsers) +
-		"\n\nupdateMarkerMessage\n: \'" + JSON.stringify(updateMarkerMessage);
-	response.send(s);
-});
-
-var truncateDb = function() {
 	pgClient.query('DELETE FROM cachedLocation WHERE (first_name !=  \'Kai\' AND first_name != \'Sarah\')', function(err, result) {
 		console.log("error un: " + err);
 		console.log("Remove unauthorized: \n" + util.inspect(result, {colors: true, depth:4}));
@@ -200,7 +190,13 @@ var truncateDb = function() {
 		console.log("error old: " + err);
 		console.log("Remove old: \n" + util.inspect(result, {colors: true, depth:4}));
 	});
-};
+});
+app.get('/readCache', function (request, response) {
+	var s = "cachedLocation: \n" + JSON.stringify(cachedLocation) +
+		"\n\nregisteredUsers: \n" + JSON.stringify(registeredUsers) +
+		"\n\nupdateMarkerMessage\n: \'" + JSON.stringify(updateMarkerMessage);
+	response.send(s);
+});
 
 var readDbCache = function() {
 	//cached locations
