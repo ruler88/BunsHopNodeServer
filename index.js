@@ -35,6 +35,7 @@ var sendLocation = function(first_name, latitude, longitude, metaData) {
 	message.addDataWithKeyValue('first_name', first_name);
 	message.addDataWithKeyValue('latitude', latitude);
 	message.addDataWithKeyValue('longitude', longitude);
+	message.addDataWithKeyValue('time', new Date());
 	if(metaData) 	message.addDataWithKeyValue('metaData', metaData);
 	for(var username in registeredUsers) {
 		if(registeredUsers[username].length != 0 && first_name != username) {
@@ -47,7 +48,7 @@ var sendLocation = function(first_name, latitude, longitude, metaData) {
 	if(metaData) {
 		updateMarkerMessage = message;
 	} else {
-		var loc = { latitude: latitude, longitude: longitude };
+		var loc = { latitude: latitude, longitude: longitude, time: new Date() };
 		cachedLocation[first_name] = loc;
 	}
 	pgClient.query('INSERT INTO cachedLocation (first_name, latitude, longitude, time, metaData) VALUES ($1, $2, $3, $4, $5)'
@@ -78,6 +79,7 @@ var getLocation = function(first_name) {
 			message.addDataWithKeyValue('first_name', username);
 			message.addDataWithKeyValue('latitude', location.latitude);
 			message.addDataWithKeyValue('longitude', location.longitude);
+			message.addDataWithKeyValue('time', location.time);
 			sender.send(message, recipients, 4, function(err, result) {});
 		}
 	}
@@ -133,6 +135,7 @@ app.post('/', function(request, response) {
 	var queryData = request.body;
 	console.log("Post Request: \n" + util.inspect(queryData, {colors: true, depth:4}));
 	console.log("YOLO MOTHERFUCKER: " + queryData.first_name + " - " + queryData.location.latitude + ", " + queryData.location.longitude);
+	queryData.location[time] = new Date();
 
 	cachedLocation[queryData.first_name] = queryData.location;
 	backgroundGeolocationCallback(queryData.first_name, queryData.location);
