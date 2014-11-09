@@ -80,6 +80,7 @@ var getLocation = function(first_name) {
 			message.addDataWithKeyValue('first_name', username);
 			message.addDataWithKeyValue('latitude', location.latitude);
 			message.addDataWithKeyValue('longitude', location.longitude);
+			console.log("KILL2 :" + location.time);
 			message.addDataWithKeyValue('time', location.time);
 			sender.send(message, recipients, 4, function(err, result) {});
 		}
