@@ -49,6 +49,7 @@ var sendLocation = function(first_name, latitude, longitude, metaData) {
 		updateMarkerMessage = message;
 	} else {
 		var loc = { latitude: latitude, longitude: longitude, time: new Date() };
+		console.log("KILL :" + loc.time);
 		cachedLocation[first_name] = loc;
 	}
 	pgClient.query('INSERT INTO cachedLocation (first_name, latitude, longitude, time, metaData) VALUES ($1, $2, $3, $4, $5)'
@@ -115,7 +116,7 @@ app.get('/', function(request, response) {
 		if(queryData.regid) {
 			storeRegId(queryData.first_name, queryData.regid);
 		}
-		//for location updates
+		//for location updates (called when user press center me)
 		if(queryData.latitude && queryData.longitude && cachedLocation[queryData.first_name] ) {
 			sendLocation(queryData.first_name, queryData.latitude, queryData.longitude, queryData.metaData);
 		}
