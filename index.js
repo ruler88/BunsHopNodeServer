@@ -49,7 +49,6 @@ var sendLocation = function(first_name, latitude, longitude, metaData) {
 		updateMarkerMessage = message;
 	} else {
 		var loc = { latitude: latitude, longitude: longitude, time: new Date() };
-		console.log("KILL :" + loc.time);
 		cachedLocation[first_name] = loc;
 	}
 	pgClient.query('INSERT INTO cachedLocation (first_name, latitude, longitude, time, metaData) VALUES ($1, $2, $3, $4, $5)'
@@ -80,7 +79,6 @@ var getLocation = function(first_name) {
 			message.addDataWithKeyValue('first_name', username);
 			message.addDataWithKeyValue('latitude', location.latitude);
 			message.addDataWithKeyValue('longitude', location.longitude);
-			console.log("KILL2 :" + location.time);
 			message.addDataWithKeyValue('time', location.time);
 			sender.send(message, recipients, 4, function(err, result) {});
 		}
