@@ -79,7 +79,7 @@ var getLocation = function(first_name) {
 			message.addDataWithKeyValue('first_name', username);
 			message.addDataWithKeyValue('latitude', location.latitude);
 			message.addDataWithKeyValue('longitude', location.longitude);
-			message.addDataWithKeyValue('time', location.time);
+			message.addDataWithKeyValue('time', location.time.getTime());
 			sender.send(message, recipients, 4, function(err, result) {});
 		}
 	}
